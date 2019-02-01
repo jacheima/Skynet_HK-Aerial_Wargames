@@ -8,7 +8,7 @@
 using namespace std;
 
 
-int binarySearch(int grid[], int max, int hostile_position);
+int binarySearch(int grid[], int min, int middle, int max, int hostile_position, int ping);
 
 int main()
 {
@@ -46,13 +46,12 @@ int main()
 
 	
 	
-
-int humanSearch()
-{
 	
 }
 
-int binarySearch(int grid, int max, int hostile_position)
+
+
+int binarySearch(int grid, int min, int max, int middle, int hostile_position, int ping)
 {
 	
 
@@ -97,25 +96,12 @@ int binarySearch(int grid, int max, int hostile_position)
 
 	cout << "Skynet HK-Aerial Software took " << ping << " predictions to find the enemy location on a grid size of 8x8 (64)." << endl;
 
-	system("pause"); //pause the program so the user can read the output, to continue the user will provide any input on the keyboard
-}
-
-int linearSearch(int grid[], int max, int hostile_position)
-{
-	int i;
-	for (i = 0; i < max; i++)
-	{
-		if (grid[i] == hostile_position)
-		{
-			
-		}
-
-		return -1;
-	}
-
-}
-
-int randomSearch()
-{
 	
+
+	system("pause"); //pause the program so the user can read the output, to continue the user will provide any input on the keyboard
+
+	return 0;
+
+
 }
+
