@@ -5,6 +5,7 @@
 #include<string>
 #include <cstdlib>
 #include <ctime>
+#include<vector>
 using namespace std;
 
 
@@ -44,26 +45,85 @@ int main()
 	//This is the number of tries the program used to find the hostile position
 	int ping = 1;
 
-	
-	
-	
-}
+	cout << "Skynet Wargames Software Initilizing....." << endl;
+	cout << "Generating search grid....." << endl;
+	cout << "Spawning enemy on at grid location......" << endl;
+	cout << "=============================================================================================================================" << endl;
 
+	cout << endl;
+	cout << endl;
 
+	// ***************************Human Search AI Starts Here **********************************************\\
 
-int binarySearch(int grid, int min, int max, int middle, int hostile_position, int ping)
-{
+	int currentGuess = 0;
+	ping = 0;
+
+	cout << "Welcome to Skynet HK-Aerial Simulation" << endl;
+	cout << "The enemy location is selected. When prompted guess a loctation where you think the enemy is located." << endl;
+	cout << "You will be prompted to guess again if you did not slect the enemy location" << endl;
+
+	system("pause"); // pauses the program for the player to indicate they are ready to continue
+
+	//While loop that continuously allows the player to guess a number until they guess right
+	while (currentGuess != hostile_position)
+	{
+		ping++; 
+		//increments the ping number to tell the player how many guess they took to guess right
+		cout << "Please enter your guess : ";
+
+		//saves the player input in the variable 
+		cin >> currentGuess;
+
+		//if the players current guess is equal to the current hostile position
+		if (currentGuess == hostile_position)
+		{
+			cout << "Skynet HK-Aerial Radar sending out ping #" << ping << endl;
+			cout << "Enemy was found hiding in location #" << currentGuess << "." << endl;
+			cout << "Target was neutralized at loction #" << currentGuess << "." << endl;
+
+			//leave the loop
+			break;
+		}
+		// if the player current guess is less then the hostile's position
+		else if (currentGuess < hostile_position)
+		{
+			cout << "Skynet HK-Aerial Radar sending out ping #" << ping << endl;
+			cout << "The target location prediction of " << currentGuess << " was lower than the actual enemy location." << endl;
+			cout << "=================================================================================== " << endl;
+		}
+		//if the players current guess is higher than the hostile's position
+		else
+		{
+			cout << "Skynet HK-Aerial Radar sending out ping #" << ping << endl;
+			cout << "The target location prediction of " << currentGuess << " was higher than the actual enemy location." << endl;
+			cout << "=================================================================================== " << endl;
+		}
+	}
+
+	system("pause");
+
+	// ***************************Human Search AI Ends Here **********************************************\\
+
+	// set up for binary search
+
+	ping = 0;
 	
+	cout << endl;
+	cout << endl;
 
+	// ***************************Binary Search AI Starts Here **********************************************\\
 
 	cout << "Generate a random enemy location on a 8x8 grid..." << endl;
 	cout << "The enemy is located at grid #" << hostile_position << " on 8x8 grid with 1 - 64 sectors." << endl;
-	cout << "Skynet HK-Aerial Initializing software..." << endl;
+	cout << "Skynet HK-Aerial Binary Search Initializing software..." << endl;
 	cout << "=================================================================================== " << endl;
 
 	//While the min number is less than or equal to the max number do the following:
 	while (min <= max)
 	{
+		// increment the ping number because the computer did not guess right so we have to try again
+		ping++;
+
 		if (middle == hostile_position) //if the middle number (the computers guess) is equal to the position our hostile is in
 		{
 			cout << "Skynet HK-Aerial Radar sending out ping #" << ping << endl;
@@ -77,7 +137,7 @@ int binarySearch(int grid, int min, int max, int middle, int hostile_position, i
 			cout << "Skynet HK-Aerial Radar sending out ping #" << ping << endl;
 			cout << "The target location prediction of " << middle << " was lower than the actual enemy location of " << hostile_position << "." << endl;
 			cout << "=================================================================================== " << endl;
-			ping++; // increment the ping number because the computer did not guess right so we have to try again
+			
 			min = middle + 1; //reset the min to the middle + 1 so view a new section of our grid
 			middle = ((max - min) / 2) + min; // reset the middle based off the new min value
 
@@ -88,7 +148,6 @@ int binarySearch(int grid, int min, int max, int middle, int hostile_position, i
 			cout << "Skynet HK-Aerial Radar sending out ping #" << ping << endl;
 			cout << "The target location prediction of " << middle << " was higher than the actual enemy location of " << hostile_position << "." << endl;
 			cout << "=================================================================================== " << endl;
-			ping++; // increase the ping number by 1 because the computer did not guess right so we have to try again
 			max = middle - 1; // set the new max value to the middle minus one to view a new part of the grid
 			middle = ((max - min) / 2) + min; //reset the middle based off the new max value
 		}
@@ -96,12 +155,114 @@ int binarySearch(int grid, int min, int max, int middle, int hostile_position, i
 
 	cout << "Skynet HK-Aerial Software took " << ping << " predictions to find the enemy location on a grid size of 8x8 (64)." << endl;
 
+
+	//pause the program so the user can read the output, to continue the user will provide any input on the keyboard
+	system("pause"); 
+
 	
 
-	system("pause"); //pause the program so the user can read the output, to continue the user will provide any input on the keyboard
+	// ***************************Binary Search AI Ends Here **********************************************\\
 
-	return 0;
+	// Set up for the next search
+	ping = 0;
 
+	cout << endl;
+	cout << endl;
 
+	// ***************************Linear Search AI Starts Here **********************************************\\
+	
+	//this is the number that the linear search is guessing
+	int guess;
+
+	
+	cout << "Skynet HK-Aerial Linear Seach Initializing software..." << endl;
+	cout << "=================================================================================== " << endl;
+
+	//this loop will run 64 times unless it guess the hostile's position before then, the loop will break when it guesses the right number. 
+	for (guess = 0; guess < max; guess++)
+	{
+		cout << "Skynet HK-Aerial Radar sending out ping #" << ping << endl;
+		ping++; // increase the ping number by 1 because the computer did not guess right so we have to try again
+
+		//if the guess is equal to the hostile position
+		if (grid[guess] == hostile_position)
+		{
+			cout << "Target was located on sector #" << guess << "." << endl;
+			//end the loop
+			break;
+		}
+		//otherwise
+		else
+		{
+			cout << "The target location prediction of " << guess << " was higher than the actual enemy location of " << hostile_position << "." << endl;
+		}
+
+		cout << "=================================================================================== " << endl;
+	}
+	
+	//pause so they player has time to read the output
+	system("pause");
+
+	// ***************************Linear Search AI Ends Here **********************************************\\
+
+	//Random Seach Set up
+	//set ping back to 0
+	ping = 0;
+
+	cout << endl;
+	cout << endl;
+
+	// ***************************Random Search AI Starts Here **********************************************\\
+	
+
+	//gets a psudo-random number
+	srand(time(0));
+
+	//sets a random number between 1 and 64 to the variable
+	int RandomGuess = rand() % 64;
+	
+
+	//while the random guess is not equal to the hostile position
+	while (RandomGuess != hostile_position)
+	{
+		//set a new random number to the variable RandomGuess
+		RandomGuess = rand() % max;
+		
+
+		//and increment the ping #
+		ping++;
+		
+		//if the guess is equal to the hostile position
+		if (RandomGuess == hostile_position)
+		{
+			cout << "Skynet HK-Aerial Radar sending out ping #" << ping << endl;
+			cout << "Enemy was found hiding in location #" << RandomGuess << "." << endl;
+			cout << "Target was neutralized at loction #" << RandomGuess << "." << endl;
+			//exit from the loop
+			break;
+		}
+
+		//if the RandomGuess is less than the hostile position
+		else if (RandomGuess < hostile_position)
+		{
+			cout << "Skynet HK-Aerial Radar sending out ping #" << ping << endl;
+			cout << "The target location prediction of " << RandomGuess << " was lower than the actual enemy location of " << hostile_position << "." << endl;
+			cout << "=================================================================================== " << endl;
+		}
+
+		//otherwise (if the guess is higher)
+		else
+		{
+			cout << "Skynet HK-Aerial Radar sending out ping #" << ping << endl;
+			cout << "The target location prediction of " << RandomGuess << " was higher than the actual enemy location of " << hostile_position << "." << endl;
+			cout << "=================================================================================== " << endl;
+		}
+
+	}
+	//pause the system so they player can read the output
+	system("pause");
+	
 }
+
+
 
